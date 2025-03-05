@@ -6,9 +6,9 @@ use App\Http\Controllers\AbsensiViewController;
 use App\Models\Murid;
 use Illuminate\Http\Request;
 
-Route::get('/', function () {
-    return view('welcome');
-});
+// Route::get('/', function () {
+//     return view('welcome');
+// });
 
 Route::get('/absensi', [AbsensiViewController::class, 'index'])->name('absensi.index');
 Route::post('/absensi', [AbsensiViewController::class, 'store'])->name('absensi.store');
