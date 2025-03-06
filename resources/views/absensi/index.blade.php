@@ -97,15 +97,20 @@
                             <td>{{ $a->tanggal }}</td>
                             <td>
                                 @php
-                                    $badgeClass = match($a->keterangan) {
+                                    $keterangan = trim($a->keterangan); // Menghilangkan spasi di awal & akhir
+
+                                    $badgeClass = match($keterangan) {
                                         'Online' => 'bg-success',  // Hijau
                                         'Offline' => 'bg-secondary', // Abu-abu
                                         'Ijin' => 'bg-warning',  // Kuning
                                         'Sakit' => 'bg-danger', // Merah
                                         default => 'bg-dark' // Hitam untuk "Tanpa Keterangan"
                                     };
+
+                                    // Jika keterangan adalah 'Alfa', ubah teks menjadi 'Tanpa Keterangan'
+                                    $keteranganText = $keterangan === 'Alfa' ? 'Tanpa Keterangan' : $keterangan;
                                 @endphp
-                                <span class="badge {{ $badgeClass }}">{{ $a->keterangan }}</span>
+                                <span class="badge {{ $badgeClass }}">{{ $keteranganText }}</span>
                             </td>
                         </tr>
                     @endforeach
