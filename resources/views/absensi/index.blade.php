@@ -50,10 +50,11 @@
                     <div class="col-md-4">
                         <label for="keterangan" class="form-label">Keterangan</label>
                         <select name="keterangan" id="keterangan" class="form-control">
-                            <option value="Hadir">Hadir</option>
+                            <option value="Offline">Offline</option>
+                            <option value="Online">Online</option>
                             <option value="Ijin">Ijin</option>
                             <option value="Sakit">Sakit</option>
-                            <option value="Online">Online</option>
+                            <option value="Alfa">Tanpa Keterangan</option>
                         </select>
                     </div>
                     <div class="col-md-4">
@@ -73,7 +74,7 @@
         <!-- Tabel Absensi -->
         <div class="card p-3">
             <h5 class="text-center">Data Absensi</h5>
-            <table id="absensiTable" class="table table-bordered">
+            <table id="absensiTable" class="table table-bordered table-striped table-hover">
                 <thead>
                     <tr>
                         <th>No</th>
@@ -94,7 +95,18 @@
                             <td>{{ $a->mapel->nama_mapel }}</td>
                             <td>{{ $a->jam }}</td>
                             <td>{{ $a->tanggal }}</td>
-                            <td><span class="badge bg-info">{{ $a->keterangan }}</span></td>
+                            <td>
+                                @php
+                                    $badgeClass = match($a->keterangan) {
+                                        'Online' => 'bg-success',  // Hijau
+                                        'Offline' => 'bg-secondary', // Abu-abu
+                                        'Ijin' => 'bg-warning',  // Kuning
+                                        'Sakit' => 'bg-danger', // Merah
+                                        default => 'bg-dark' // Hitam untuk "Tanpa Keterangan"
+                                    };
+                                @endphp
+                                <span class="badge {{ $badgeClass }}">{{ $a->keterangan }}</span>
+                            </td>
                         </tr>
                     @endforeach
                 </tbody>

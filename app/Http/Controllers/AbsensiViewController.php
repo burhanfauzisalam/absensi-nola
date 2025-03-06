@@ -13,7 +13,10 @@ class AbsensiViewController extends Controller
     {
         $murid = Murid::all();
         $mapel = Mapel::all();
-        $absensi = Absensi::with(['murid', 'mapel'])->get();
+        $absensi = Absensi::with(['murid', 'mapel'])
+        ->orderBy('tanggal', 'desc') // Urutkan berdasarkan tanggal terbaru
+        ->orderBy('jam', 'desc') // Jika tanggal sama, urutkan berdasarkan jam terbaru
+        ->get();
         return view('absensi.index', compact('murid', 'mapel', 'absensi'));
     }
 

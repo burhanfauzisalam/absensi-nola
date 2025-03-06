@@ -29,7 +29,7 @@ class Absensi extends Model
             'id_mapel' => 'required|exists:mapel,id',
             'jam' => 'required',
             'tanggal' => 'required|date',
-            'keterangan' => 'required|in:Hadir,Ijin,Sakit,Online',
+            'keterangan' => 'required|in:Offline,Ijin,Sakit,Online,Alfa',
         ]);
 
         Absensi::create([

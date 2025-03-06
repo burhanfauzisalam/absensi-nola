@@ -20,7 +20,7 @@ class AbsensiController extends Controller
         $request->validate([
             'id_murid' => 'required|exists:murid,id',
             'id_mapel' => 'required|exists:mapel,id',
-            'keterangan' => 'required|in:Hadir,Ijin,Sakit,Online',
+            'keterangan' => 'required|in:Offline,Ijin,Sakit,Online,Alfa',
         ]);
 
         Absensi::create([

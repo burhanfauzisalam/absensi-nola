@@ -12,7 +12,7 @@ return new class extends Migration
     public function up()
     {
         Schema::table('absensi', function (Blueprint $table) {
-            $table->enum('keterangan', ['Hadir', 'Ijin', 'Sakit', 'Online'])->default('Hadir');
+            $table->enum('keterangan', ['Offline', 'Ijin', 'Sakit', 'Online', 'Alfa'])->default('Offline');
         });
     }
 
