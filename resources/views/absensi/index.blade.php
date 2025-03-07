@@ -16,11 +16,44 @@
         table.dataTable {
             width: 100% !important;
         }
+
+        .navbar-toggler {
+            background-color: white;
+        }
     </style>
 </head>
 <body class="bg-light">
-    <div class="container mt-5">
-        <h2 class="text-center">Absensi Murid</h2>
+    <nav class="navbar navbar-expand-lg navbar-dark">
+        <div class="container">
+            <a class="navbar-brand" href="#">
+                <img src="logo.png" alt="Logo" height="100">
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation" style="background-color: white;">
+                <span class="navbar-toggler-icon" style="filter: invert(1);"></span>
+            </button>
+            <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+                <ul class="navbar-nav">
+                    @if(Auth::check())
+                        <li class="nav-item">
+                            <span class="nav-link text-black">{{ Auth::user()->username }}</span>
+                        </li>
+                        <li class="nav-item">
+                            <form action="{{ route('logout') }}" method="POST" class="d-inline">
+                                @csrf
+                                <button type="submit" class="btn btn-danger">Logout</button>
+                            </form>
+                        </li>
+                    @endif
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h2 class="text-center flex-grow-1">Absensi Murid</h2>
+            
+        </div>
 
         @if(session('success'))
             <div class="alert alert-success">{{ session('success') }}</div>
@@ -34,7 +67,7 @@
                     <div class="col-md-4">
                         <label for="id_murid" class="form-label">Murid</label>
                         <div>
-                            <input type="text" id="search_murid" class="form-control" placeholder="Ketik nama murid...">
+                            <input type="text" id="search_murid" class="form-control" placeholder="Ketik nama murid..." required>
                             <input type="hidden" name="id_murid" id="id_murid">
                         </div>
                     </div>
@@ -97,17 +130,16 @@
                             <td>{{ $a->tanggal }}</td>
                             <td>
                                 @php
-                                    $keterangan = trim($a->keterangan); // Menghilangkan spasi di awal & akhir
+                                    $keterangan = trim($a->keterangan);
 
                                     $badgeClass = match($keterangan) {
-                                        'Online' => 'bg-success',  // Hijau
-                                        'Offline' => 'bg-secondary', // Abu-abu
-                                        'Ijin' => 'bg-warning',  // Kuning
-                                        'Sakit' => 'bg-danger', // Merah
-                                        default => 'bg-dark' // Hitam untuk "Tanpa Keterangan"
+                                        'Online' => 'bg-success',
+                                        'Offline' => 'bg-secondary',
+                                        'Ijin' => 'bg-warning',
+                                        'Sakit' => 'bg-danger',
+                                        default => 'bg-dark'
                                     };
 
-                                    // Jika keterangan adalah 'Alfa', ubah teks menjadi 'Tanpa Keterangan'
                                     $keteranganText = $keterangan === 'Alfa' ? 'Tanpa Keterangan' : $keterangan;
                                 @endphp
                                 <span class="badge {{ $badgeClass }}">{{ $keteranganText }}</span>
@@ -118,6 +150,7 @@
             </table>
         </div>
     </div>
+
 
     <script>
         document.addEventListener("DOMContentLoaded", function () {
